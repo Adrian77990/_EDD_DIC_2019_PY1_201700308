@@ -1,7 +1,10 @@
 #include <iostream>
 #include <fstream>
+#include "EDD\ListaDoble.h"
+#include "EDD\Arbolbinario.h"
 
 using namespace std;
+
 #include "json.hpp"
 
 void Menu();
@@ -12,6 +15,7 @@ void PlayLista();
 
 using json = nlohmann::json;
 std::string json_ex();
+std::string json_play();
 int main() {
     std::cout << "Hello, World!" << std::endl;
     cout<<" Reproductor de musica "<<endl;
@@ -39,6 +43,7 @@ void Menu(){
             json_ex();
         }else if(eleccionM == 2){
             cout<<"Carga de playlist json"<<endl;
+            json_play();
         }else if(eleccionM == 3){
             cout<<"Reportes"<<endl;
             Reportes();
@@ -86,7 +91,7 @@ void Reportes(){
             cout<<"Top 5 artists"<<endl;
         }else if(eleccionR == 7){
             cout<<"Regresas a menu"<<endl;
-            Menu();
+           // Menu();
             break;
         }else{
             eleccionR = 0;
@@ -115,7 +120,7 @@ void Reproduccion(){
             PlayLista();
         }else if(eleccionREP == 3){
             cout<<"Regresar al menu principal"<<endl;
-            Menu();
+           // Menu();
             break;
         }else{
             eleccionREP = 0;
@@ -183,13 +188,58 @@ void PlayLista(){
 }
 
 
-
-std::string json_ex() {
-    const std::string filename = "C:\\Users\\MSI\\Downloads\\Library.json";
+std::string json_play() {
+    const std::string filename = "playlist.json";
     std::ifstream reader(filename);
     json j;
     reader >> j;
-    cout<<j["Library"]<<endl;
+    json library = j["Songs"];
+    cout<<library.size()<<endl<<endl<<endl<<endl;
+    Arbolbinario *arbol = new Arbolbinario();
+
+    for (int i = 0; i < library.size(); i++) {
+        // cout<<library[i]<<endl<<endl<<endl<<endl;
+        //cout<<library[i]["Artist"]["Name"]<<endl;
+        string cancion = library[i]["Song"];
+        arbol->replaceChars(cancion, "\"", " ");
+        arbol->insertarartista(cancion);
+
+        //string var =library[i]["Artist"]["Name"];
+        //cout<<var;
+    }
+    //cout<<j["Library"][1]<<endl;
+    // ListaArtista->grafoy();
+    arbol->imprimir();
+    arbol->grafoy();
+    system("grafoPL.png");
+    reader.close();
+    return j.dump();
+}
+
+std::string json_ex() {
+    const std::string filename = "artista.json";
+    std::ifstream reader(filename);
+    json j;
+    reader >> j;
+    json library = j["Library"];
+    cout<<library.size()<<endl<<endl<<endl<<endl;
+    ListaDoble *ListaArtista = new ListaDoble();
+
+    for (int i = 0; i < library.size(); i++) {
+       // cout<<library[i]<<endl<<endl<<endl<<endl;
+        //cout<<library[i]["Artist"]["Name"]<<endl;
+        string nombreartista = library[i]["Artist"]["Name"];
+        ListaArtista->replaceChars(nombreartista, "\"", " ");
+        ListaArtista->insertarartista(nombreartista);
+
+        //string var =library[i]["Artist"]["Name"];
+        //cout<<var;
+    }
+    //cout<<j["Library"][1]<<endl;
+   // ListaArtista->grafoy();
+   ListaArtista->imprimir();
+    ListaArtista->grafoy();
+    system("grafo.png");
     reader.close();
     return j.dump();
 }

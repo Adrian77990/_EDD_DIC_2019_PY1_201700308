@@ -6,6 +6,22 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/MSI/CLionProjects/EDD_Proyecto1/EDD/Arbolbinario.h
+iostream
+-
+fstream
+-
+string
+-
+
+C:/Users/MSI/CLionProjects/EDD_Proyecto1/EDD/ListaDoble.h
+iostream
+-
+fstream
+-
+string
+-
+
 C:/Users/MSI/CLionProjects/EDD_Proyecto1/json.hpp
 algorithm
 -
@@ -297,6 +313,10 @@ iostream
 -
 fstream
 -
+EDD/ListaDoble.h
+C:/Users/MSI/CLionProjects/EDD_Proyecto1/EDD/ListaDoble.h
+EDD/Arbolbinario.h
+C:/Users/MSI/CLionProjects/EDD_Proyecto1/EDD/Arbolbinario.h
 json.hpp
 C:/Users/MSI/CLionProjects/EDD_Proyecto1/json.hpp
 

@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/MSI/CLionProjects/EDD_Proyecto1/EDD/Arbolbinario.h">
+			<Option target="EDD_Proyecto1"/>
+		</Unit>
+		<Unit filename="C:/Users/MSI/CLionProjects/EDD_Proyecto1/EDD/ListaDoble.h">
+			<Option target="EDD_Proyecto1"/>
+		</Unit>
 		<Unit filename="C:/Users/MSI/CLionProjects/EDD_Proyecto1/main.cpp">
 			<Option target="EDD_Proyecto1"/>
 		</Unit>
