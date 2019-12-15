@@ -1,0 +1,13 @@
+digraph G{ 
+node[shape=box];
+subgraph cluster_0{
+hola[shape=box, style=filled, fillcolor=white, color=blue, label=<<TABLE border="0" cellborder="0"><TR><TD width="45" height="45" fixedsize="true"><IMG SRC="C:/Users/MSI/CLionProjects/EDD_Proyecto1/playlist.png" scale="true"/></TD><td><font point-size="15" hola</font></td></TR></TABLE>>]
+
+hola[shape=box, style=filled, fillcolor=white, color=blue, label=<<TABLE border="0" cellborder="0"><TR><TD width="45" height="45" fixedsize="true"><IMG SRC="C:/Users/MSI/CLionProjects/EDD_Proyecto1/playlist.png" scale="true"/></TD><td><font point-size="15" hola</font></td></TR></TABLE>>]
+
+padre[shape=box, style=filled, fillcolor=white, color=blue, label=<<TABLE border="0" cellborder="0"><TR><TD width="45" height="45" fixedsize="true"><IMG SRC="C:/Users/MSI/CLionProjects/EDD_Proyecto1/playlist.png" scale="true"/></TD><td><font point-size="15" padre</font></td></TR></TABLE>>]
+
+
+label="Arbol Binario De Busqueda"
+}
+}

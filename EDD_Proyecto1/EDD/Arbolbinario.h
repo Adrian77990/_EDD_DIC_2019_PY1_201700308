@@ -1,7 +1,7 @@
 //
 // Created by MSI on 12/12/2019.
 //
-/*
+
 
 
 #ifndef EDD_PROYECTO1_ARBOLBINARIO_H
@@ -13,92 +13,180 @@
 #include <string>
 
 using namespace std;
+
+
+string concatenar = "";
+
+class Nodoarbol {
+public:
+    Nodoarbol *derecha;
+    Nodoarbol *izquierda;
+    Nodoarbol *padre;
+    string playlist;
+};
+
 class Arbolbinario {
 public:
-    string dato;
-
-    class Nodo {
-    public:
-        Arbolbinario *valor;
-        Nodo *derecha;
-        Nodo *izquierda;
-        Nodo *padre;
-    };
+    Nodoarbol * raiz =NULL;
 
 
-    Nodo *arbol = NULL;
-    Nodo *arbol2 = NULL;
-    string regreso = "";
-
-
-    Nodo *creacion(Arbolbinario arbol, Nodo *padre) {
-        Nodo *nuevo = new Nodo();
-
-        nuevo->dato = arbol;
-        nuevo->derecha = NULL;
-        nuevo->izquierda = NULL;
-        nuevo->padre = padre;
-        return nuevo;
+    Nodoarbol *crearnodo(string nombreplay)
+    {
+        Nodoarbol *nuevonodo = new Nodoarbol();
+        nuevonodo->playlist = nombreplay;
+        nuevonodo->derecha = NULL;
+        nuevonodo->izquierda = NULL;
+        return nuevonodo;
     }
 
-    void replaceChars(string &modifyMe, const string &findMe, const string &newChars) {
+
+    bool busqueda(Nodoarbol *raiz, string dato){
+         if(raiz==NULL){
+             cout<<"Se encuentra vacio"<<endl;
+             return false;
+         }else if(raiz->playlist == dato){
+             cout<<"el dato ya existe"<<endl;
+             return true;
+         }else if(dato < raiz->playlist){
+             return busqueda(raiz->izquierda,dato);
+         } else{
+             return busqueda(raiz->derecha,dato);
+         }
+    }
+
+    void declararnodosdot(Nodoarbol *raiz)
+    {
+        if(raiz==NULL){
+            return;
+        }else{
+            concatenar += raiz->playlist;
+            concatenar+="[shape=box, style=filled, fillcolor=white, color=blue, label=<<TABLE border=\"0\" cellborder=\"0\"><TR><TD width=\"45\" height=\"45\" fixedsize=\"true\"><IMG SRC=\"C:/Users/MSI/CLionProjects/EDD_Proyecto1/playlist.png\" scale=\"true\"/>";
+            concatenar+="</TD><td><font point-size=\"15\" >";
+            concatenar+=raiz->playlist;
+            concatenar+="</font></td></TR></TABLE>>]\n";
+            concatenar+="\n";
+        if(raiz->izquierda !=NULL){
+            concatenar += raiz->playlist;
+            concatenar+="[shape=box, style=filled, fillcolor=white, color=blue, label=<<TABLE border=\"0\" cellborder=\"0\"><TR><TD width=\"45\" height=\"45\" fixedsize=\"true\"><IMG SRC=\"C:/Users/MSI/CLionProjects/EDD_Proyecto1/playlist.png\" scale=\"true\"/>";
+            concatenar+="</TD><td><font point-size=\"15\" >";
+            concatenar+=raiz->playlist;
+            concatenar+="</font></td></TR></TABLE>>]\n";
+            concatenar+="\n";
+            declararnodosdot(raiz->izquierda);
+        }
+
+            if(raiz->derecha !=NULL){
+                concatenar += raiz->playlist;
+                concatenar+="[shape=box, style=filled, fillcolor=white, color=blue, label=<<TABLE border=\"0\" cellborder=\"0\"><TR><TD width=\"45\" height=\"45\" fixedsize=\"true\"><IMG SRC=\"C:/Users/MSI/CLionProjects/EDD_Proyecto1/playlist.png\" scale=\"true\"/>";
+                concatenar+="</TD><td><font point-size=\"15\" >";
+                concatenar+=raiz->playlist;
+                concatenar+="</font></td></TR></TABLE>>]\n";
+                concatenar+="\n";
+                declararnodosdot(raiz->derecha);
+            }
+
+        }
+    }
+
+    void uniondenodos(Nodoarbol *raiz)
+    {
+        if(raiz==NULL){
+            return;
+        }
+        else{
+            concatenar += raiz->playlist;
+            concatenar += "\n";
+
+            if(raiz->izquierda!=NULL){
+                concatenar += raiz->playlist;
+                concatenar += "->";
+                uniondenodos(raiz->izquierda);
+            }
+            if(raiz->derecha!=NULL){
+                concatenar += raiz->playlist;
+                concatenar += "->";
+                uniondenodos(raiz->derecha);
+            }
+
+
+        }
+    }
+
+    void replaceChars(string& modifyMe,const string& findMe, const string& newChars){
         size_t i = modifyMe.find(findMe, 0);
-        if (i != string::npos)
+        if(i != string::npos)
             modifyMe.replace(i, findMe.size(), newChars);
     }
 
+    void graficar(string datos){
+        FILE *f;
+        char direccion[] = "grafo_arbol.txt";
+        f = fopen(direccion,"w");
+        if(f==NULL)
+        {
+            cout << "no se creó el archivo" << endl;
+        }
+        else
+        {
+            ofstream archivo;
+            archivo.open(direccion);
 
-    void insertar(Nodo *&arbol, Arbolbinario abb, Nodo *padre) {
-        if (arbol == NULL) {
-            Nodo *temp = creacion(abb, padre);
-            arbol = temp;
-            cout << "raiz" << endl;
-        } else {
-            if (!busqueda(arbol, abb)) {
-                string datoraiz = arbol->dato.valor;
-                if ((abb.valor) < (datoraiz)) {
-                    insertar(arbol->izquierda, abb, arbol);
-                    cout << "nodo a la izquierda" << endl;
-                } else {
-                    insertar(arbol->derecha, abb, arbol);
-                    cout << "nodo a la derecha" << endl;
+            //--------------------Aqui inicia la escritura del archivo-------------------
+
+            archivo << "digraph G{ " << endl;
+            archivo <<"graph [nodesep=0.3];"<<endl;
+            archivo<<"node[shape=box];"<<endl;
+//    archivo <<
+            archivo<<"subgraph cluster_0{"<<endl;
+            archivo<<datos<<endl;
+            archivo<<"label=\"Arbol Binario De Busqueda\";"<<endl;
+            archivo <<"}"<<endl;
+
+            archivo << "}" << endl;
+
+            //---------------------Aqui termina el archivo----------------
+
+            archivo.close();
+            system("dot -Tpng grafo_arbol.txt -o grafo_arbol.png");
+            system("grafo_arbol.png");
+
+        }
+    }
+
+    void insertarenelarbol(Nodoarbol *& raiz, string nombre)
+    {
+        if(raiz==NULL){
+            Nodoarbol *nuevonodo = crearnodo(nombre);
+            raiz = nuevonodo;
+            cout<<"raiz creada"<<endl;
+        }
+        else{
+            if(!busqueda(raiz,nombre)){
+                string valor = raiz->playlist;
+                if(nombre < valor){
+                    insertarenelarbol(raiz->izquierda,nombre);
+                    cout<<"inserto a la izquierda"<<endl;
+                }else{
+                    insertarenelarbol(raiz->derecha,nombre);
+                    cout<<"inserto a la derecha"<<endl;
                 }
-            } else {
-                cout << "ya existe el nodo" << abb.valor << endl;
+
+            }else{
+                //cout<<"ya existe el nodo"<<endl;
             }
         }
     }
-
-    bool busqueda(Nodo *arbol, Arbolbinario abb) {
-        if (arbol == NULL) {
-            cout << "El arbol esta vacio" << endl;
-            return false;
-
-        } else if (arbol->dato.valor == abb.valor) {
-
-            cout << "nodo encontrado" << endl;
-            return true;
-        } else if (abb.valor < arbol->dato.valor) {
-            return busqueda(arbol->izquierda, abb);
-        } else {
-            return busqueda(arbol->derecha, abb);
-        }
-    }
-
-    void mostrar(Nodo *arbol, int aux) {
-        if (arbol == NULL) { return; }
-        else {
-            mostrar(arbol->derecha, aux + 1);
-            for (int i = 0; i < aux; i++) {
-                cout << " ";
-            }
-            cout << arbol->dato.valor << endl;
-            mostrar(arbol->izquierda, aux + 1);
-        }
-    }
-
 
 };
 
+
+
+
+
+
+
+
+
+
 #endif //EDD_PROYECTO1_ARBOLBINARIO_H
-*/
+

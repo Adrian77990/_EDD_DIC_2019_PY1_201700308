@@ -1,0 +1,11 @@
+digraph G{ 
+graph [nodesep=0.3];
+node[shape=box];
+subgraph cluster_0{
+Young and Aspiring
+Young and Aspiring->On My Teeth
+On My Teeth->Blinded
+
+label="Arbol Binario De Busqueda";
+}
+}

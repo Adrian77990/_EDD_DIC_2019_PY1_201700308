@@ -3,6 +3,7 @@
 #include "EDD\ListaDoble.h"
 #include "EDD\Arbolbinario.h"
 #include "EDD\Cuboortogonal.h"
+#include "EDD\Arbolbinario.h"
 
 using namespace std;
 
@@ -14,15 +15,40 @@ void Reproduccion();
 void Biblioteca();
 void PlayLista();
 
+//-------------------------------------------
+/*
+Nodoarbol *crearnodo(string , Nodoarbol *); //creacion del nodo arbol binario de busqueda
+void insertarenelarbol(Nodoarbol *&, string, Nodoarbol *);//inserta nodo
+void mostrararbol(Nodoarbol *,int);
+void inorden(Nodoarbol *);
+void graficar(string,string);
+void declararnodosdot(Nodoarbol *);
+void unirnodosdot(Nodoarbol *);
+bool busqueda(Nodoarbol *, string);
+string busquedaporcodigo(Nodoarbol *, string);
+*/
+//---------------------------------------
+
 using json = nlohmann::json;
 std::string json_ex();
 std::string json_play();
 int main() {
     std::cout << "Hello, World!" << std::endl;
     cout<<" Reproductor de musica "<<endl;
+/*
+    Arbolbinario *arbolbina = new Arbolbinario();
 
+    arbolbina->insertarenelarbol(arbolbina->raiz,"ab");
+    arbolbina->insertarenelarbol(arbolbina->raiz,"a");
+    arbolbina->insertarenelarbol(arbolbina->raiz,"abcd");
+    arbolbina->insertarenelarbol(arbolbina->raiz,"abcdef");
+    arbolbina->insertarenelarbol(arbolbina->raiz,"abcde");
+    arbolbina->insertarenelarbol(arbolbina->raiz,"abcdefghj");
 
-
+    arbolbina->declararnodosdot(arbolbina->raiz);
+    arbolbina->uniondenodos(arbolbina->raiz);
+    arbolbina->graficar(concatenar);
+*/
     Menu();
 
     return 0;
@@ -46,7 +72,7 @@ void Menu(){
             json_ex();
         }else if(eleccionM == 2){
             cout<<"Carga de playlist json"<<endl;
-           // json_play();
+           json_play();
         }else if(eleccionM == 3){
             cout<<"Reportes"<<endl;
             Reportes();
@@ -189,9 +215,9 @@ void PlayLista(){
         }
     }while(eleccionPL != 0);
 }
+//-------------------------------------------------------------------------
 
-
-/*std::string json_play() {
+std::string json_play() {
     const std::string filename = "playlist.json";
     std::ifstream reader(filename);
     json j;
@@ -203,22 +229,27 @@ void PlayLista(){
     for (int i = 0; i < library.size(); i++) {
         // cout<<library[i]<<endl<<endl<<endl<<endl;
         //cout<<library[i]["Artist"]["Name"]<<endl;
+        //if (library[i]["Songs"].is_null() != true ) {
         string cancion = library[i]["Song"];
         arbol->replaceChars(cancion, "\"", " ");
-        arbol->insertarartista(cancion);
+        cout<<"  "<<arbol->raiz<<" can "<<cancion<<endl;
+        arbol->insertarenelarbol(arbol->raiz,cancion);
 
         //string var =library[i]["Artist"]["Name"];
         //cout<<var;
+    //}
     }
     //cout<<j["Library"][1]<<endl;
     // ListaArtista->grafoy();
-    arbol->imprimir();
-    arbol->grafoy();
-    system("grafoPL.png");
+//    arbol->imprimir();
+  //  arbol->grafoy();
+        arbol->uniondenodos(arbol->raiz);
+        arbol->graficar(concatenar);
+   // system("grafo_arbol.png");
     reader.close();
     return j.dump();
-}*/
-
+}
+//---------------------------------------------------------------------------------
 string lower(string caracter)
 {
     int tolower ( int c );
@@ -227,7 +258,10 @@ string lower(string caracter)
     });
     return caracter;
 }
+//---------------------------------------------------------------------------------------------------------------
 
+
+//----------------------------------------------------------------------------------------------------------------
 std::string json_ex() {
     const std::string filename = "artista.json";
     std::ifstream reader(filename);
